@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Denuncias de Cuentas Fake</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+    header { background: #333; color: white; padding: 1rem; text-align: center; }
+    main { padding: 1rem; max-width: 800px; margin: auto; }
+    .search-box { margin-bottom: 1rem; }
+    .card { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1rem; overflow: hidden; }
+    .card img { width: 100%; display: block; }
+    .card-content { padding: 0.5rem 1rem; }
+    .card-content h3 { margin: 0.5rem 0; }
+    .card-content p { margin: 0.5rem 0; color: #555; }
+    footer { text-align: center; padding: 1rem; color: #777; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Denuncias de Cuentas Fake</h1>
+  </header>
+  <main>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Buscar por usuario o comentario..." style="width:100%; padding:0.5rem; font-size:1rem;">
+    </div>
+    <div id="gallery"></div>
+  </main>
+  <footer>
+    <p>Publicado con GitHub Pages</p>
+  </footer>
+
+  <script>
+    // Array de denuncias: añade tus propias entradas aquí
+    const reports = [
+      {
+        user: 'cuenta_fake123',
+        comment: 'Esta cuenta usa fotos de otras personas sin permiso.',
+        image: 'https://i.postimg.cc/xyz/ejemplo1.jpg'
+      },
+      // { user: 'otro_usuario', comment: 'Descripción...', image: 'URL de imagen' },
+    ];
+
+    const gallery = document.getElementById('gallery');
+    const searchInput = document.getElementById('search');
+
+    function render(items) {
+      gallery.innerHTML = '';
+      if (items.length === 0) {
+        gallery.innerHTML = '<p>No hay resultados.</p>';
+        return;
+      }
+      items.forEach(item => {
+        const card = document.createElement('div'); card.className = 'card';
+        const img = document.createElement('img'); img.src = item.image;
+        const content = document.createElement('div'); content.className = 'card-content';
+        const title = document.createElement('h3'); title.textContent = item.user;
+        const text = document.createElement('p'); text.textContent = item.comment;
+        content.appendChild(title);
+        content.appendChild(text);
+        card.appendChild(img);
+        card.appendChild(content);
+        gallery.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const filtered = reports.filter(r =>
+        r.user.toLowerCase().includes(query) ||
+        r.comment.toLowerCase().includes(query)
+      );
+      render(filtered);
+    });
+
+    // Render inicial
+    render(reports);
+  </script>
+</body>
+</html>
